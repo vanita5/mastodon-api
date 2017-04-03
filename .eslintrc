@@ -7,6 +7,8 @@
   "rules": {
     "indent": [ "warn", 4 ],
     "semi": [ "error", "never" ],
-    "comma-dangle": [ "error", "never" ]
+    "comma-dangle": [ "error", "never" ],
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off"
   }
 }
