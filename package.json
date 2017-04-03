@@ -3,7 +3,46 @@
   "version": "1.0.0",
   "description": "Mastodon API library with streaming support",
   "main": "./lib/mastodon",
-  "repository": "http://github.com/vanita5/mastodon-api.git",
-  "author": "vanita5",
-  "license": "MIT"
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp test",
+    "prepublish": "gulp prepublish"
+  },
+  "homepage": "https://github.com/vanita5/mastodon-api",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanita5/mastodon-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vanita5/mastodon-api/issues"
+  },
+  "author": {
+    "name": "vanita5",
+    "email": "mail@vanit.as"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mastodon",
+    "streaming",
+    "api",
+    "library",
+    "client",
+    "rest"
+  ],
+  "dependencies": {
+    "gulp-eslint": "^3.0.1",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.1",
+    "babel-preset-latest": "^6.24.0",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean": "^0.3.2"
+  }
 }

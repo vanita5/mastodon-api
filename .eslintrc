@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "indent": [ "warn", 4 ],
+    "semi": [ "error", "never" ],
+    "comma-dangle": [ "error", "never" ]
+  }
+}
