@@ -1,11 +1,13 @@
 import assert from 'assert'
 import util from 'util'
+import { OAuth2 } from 'oauth'
 import Request from 'request'
 
 import Helpers from './helpers'
 import {
     STATUS_CODES_TO_ABORT_ON,
     DEFAULT_REST_ROOT,
+    DEFAULT_REST_BASE,
     REQUIRED_KEYS_FOR_AUTH
 } from './settings'
 
@@ -14,7 +16,7 @@ class Mastodon {
     constructor(config) {
         this.apiUrl = config.api_url || DEFAULT_REST_ROOT
 
-        this._validateConfigOrThrow(config)
+        Mastodon._validateConfigOrThrow(config)
 
         this.config = config
         this._mastodon_time_minus_local_time_ms = 0
@@ -288,6 +290,59 @@ class Mastodon {
             if (!config[reqKey]) {
                 throw new Error(`Mastodon config must include '${reqKey}' when using 'user_auth'`)
             }
+        })
+    }
+
+    static createOAuthApp() {
+        return new Promise((resolve, reject) => {
+            Request.post({
+                url: 'https://mastodon.social/api/v1/apps',
+                form: {
+                    client_name: 'mastodon-node',
+                    scopes: 'read write follow',
+                    redirect_uris: 'urn:ietf:wg:oauth:2.0:oob'
+                }
+            }, (err, res, body) => {
+                if (err) {
+                    reject(err)
+                    return
+                }
+                try {
+                    body = JSON.parse(body)
+                } catch (e) {
+                    reject(new Error(`Error parsing body ${body}`))
+                }
+                resolve(body)
+            })
+        })
+    }
+
+    static getAuthorizationUrl(clientId, clientSecret) {
+        return new Promise((resolve) => {
+            const oauth = new OAuth2(clientId, clientSecret, DEFAULT_REST_BASE, null, '/oauth/token')
+            const url = oauth.getAuthorizeUrl({
+                redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+                response_type: 'code',
+                scope: 'read write follow',
+                client_id: clientId
+            })
+            resolve({ clientId, clientSecret, url })
+        })
+    }
+
+    static getAccessToken(clientId, clientSecret, code) {
+        return new Promise((resolve, reject) => {
+            const oauth = new OAuth2(clientId, clientSecret, DEFAULT_REST_BASE, null, '/oauth/token')
+            oauth.getOAuthAccessToken(code, {
+                grant_type: 'authorization_code',
+                redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
+            }, (err, accessToken /* , refreshToken, res */) => {
+                if (err) {
+                    reject(err)
+                    return
+                }
+                resolve(accessToken)
+            })
         })
     }
 }
