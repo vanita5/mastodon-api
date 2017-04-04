@@ -9,6 +9,8 @@
     "semi": [ "error", "never" ],
     "comma-dangle": [ "error", "never" ],
     "no-underscore-dangle": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "strict": "off",
+    "no-plusplus": "off"
   }
 }

@@ -4,6 +4,8 @@ import { OAuth2 } from 'oauth'
 import Request from 'request'
 
 import Helpers from './helpers'
+import StreamingAPIConnection from './streaming-api-connection'
+
 import {
     STATUS_CODES_TO_ABORT_ON,
     DEFAULT_REST_ROOT,
@@ -347,6 +349,28 @@ class Mastodon {
                 resolve(accessToken)
             })
         })
+    }
+
+    stream(path, params) {
+        const mastodonOptions = (params && params.mastodon_options) || {}
+
+        const streamingConnection = new StreamingAPIConnection()
+        this._buildRequestOptions('GET', path, params, (err, requestOptions) => {
+            if (err) {
+                // surface this on the streamingConnection instance
+                // (where a user may register their error handler)
+                streamingConnection.emit('error', err)
+                return
+            }
+            // set the properties required to start the connection
+            streamingConnection.requestOptions = requestOptions
+            streamingConnection.mastodonOptions = mastodonOptions
+
+            process.nextTick(() => {
+                streamingConnection.start()
+            })
+        })
+        return streamingConnection
     }
 }
 
