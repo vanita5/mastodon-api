@@ -4,7 +4,15 @@
 
 # Installing
 
-TODO
+```bash
+yarn add mastodon-api
+```
+
+OR
+
+```bash
+npm install --save mastodon-api
+```
 
 # Usage:
 
