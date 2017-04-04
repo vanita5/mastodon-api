@@ -374,4 +374,4 @@ class Mastodon {
     }
 }
 
-export default Mastodon
+module.exports = Mastodon
