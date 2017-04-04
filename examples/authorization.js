@@ -2,8 +2,6 @@ import readline from 'readline'
 
 import Mastodon from '../lib/mastodon'
 
-/* eslint-disable no-console */
-
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
