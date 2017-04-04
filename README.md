@@ -6,10 +6,6 @@
 
 TODO
 
-# TODO
-
-* Implement Streaming API
-
 # Usage:
 
 ## Authorization
@@ -81,9 +77,9 @@ Your `client_id`.
 
 
 ```javascript
-var Mastodon = require('mastodon')
+import Mastodon from 'mastodon-api'
 
-var M = new Masto({
+var M = new Mastodom({
   access_token: '...',
   timeout_ms: 60*1000,  // optional HTTP request timeout to apply to all requests.
   api_url: 'https://gay.crime.team/api/v1/', // optional, defaults to https://mastodon.social/api/v1/
@@ -125,6 +121,10 @@ The endpoint to hit.
 
 POST any of the REST API endpoints. Same usage as `T.get()`.
 
+## `M.stream(path, [params])`
+
+Returns a stream listener instance. See examples on how to use it.
+
 ## `M.getAuth()`
 Get the client's authentication tokens.
 
@@ -142,9 +142,21 @@ M.get('timelines/home', {}).then(resp => console.log(resp.data))
 
 ### Upload an image and attach it to a tweet
 ```javascript
-var id;
+let id;
 M.post('media', { file: fs.createReadStream('path/to/image.png') }).then(resp => id = resp.data.id)
 M.post('statuses', { status: '#selfie', media_ids: [id] });
+```
+
+### Stream home timeline
+
+[Read](https://github.com/tootsuite/mastodon/blob/master/docs/Using-the-API/Streaming-API.md) the API documentation.
+
+```javascript
+const listener = M.stream('streaming/user')
+
+listener.on('message', msg => console.log(msg))
+
+listener.on('error', err => console.log(err))
 ```
 
 -------
