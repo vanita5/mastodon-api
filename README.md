@@ -10,9 +10,75 @@ TODO
 
 * Implement Streaming API
 
-## Usage:
+# Usage:
 
-For getting an access token, please look inte `examples/authorization.js`!
+## Authorization
+
+For getting an access token, please take a look into [examples/authorization.js](https://github.com/vanita5/mastodon-api/blob/master/examples/authorization.js).
+
+For more information, please take a look on the wiki [here](https://github.com/jessicahayley/node-mastodon/wiki/Getting-an-access_token-with-the-oauth-package)
+and [here](https://github.com/tootsuite/mastodon/blob/master/docs/Using-the-API/API.md#apps).
+
+The authorization process works as follows:
+
+1. Hit the `/apps` endpoint to create an OAuth application
+2. With the received `client_id` and `client_secret` get an authorization URL
+3. Get an access token by hitting the `/oauth/token` endpoint with the authorization code you got from the authorization page
+
+## `Mastodon.createOAuthApp(url, clientName, scopes)`
+Makes a call to the `/app` endpoint to create an OAuth app.
+Returns the apps `id`, `client_id` and `client_secret`.
+
+These values should be stored and used from now on. Ideally only call this once!
+
+**url**
+
+Optional. The base url of the Mastodon instance. Defaults to `https://mastodon.social/api/v1/apps`
+
+**clientName**
+
+Optional. Defaults to `mastodon-node`
+
+**scopes**
+
+Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to `read write follow`
+
+## `Mastodon.getAuthorizationUrl(clientId, clientSecret, baseUrl)`
+Returns an authorization url for users to authorize your application.
+`clientId` and `clientSecret` can be obtained by calling `Mastodon.createOAuthApp(...)` before.
+
+**clientId**
+
+Your `client_id`.
+
+**clientSecret**
+
+Your `client_secret`.
+
+**baseUrl**
+
+Optional. Defaults to `https://mastodon.social`.
+
+## `Mastodon.getAccessToken(clientId, clientSecret, authorizationCode, baseUrl)`
+After authorizing your OAuth application via the authorization URL from `Mastodon.getAuthorizationUrl(...)`
+you'll get the authorization code on the website, which lets us obtain the access token we actually need.
+
+**clientId**
+
+Your `client_id`.
+
+ **clientSecret**
+
+ Your `client_secret`.
+
+ **authorizationCode**
+
+ The authorization code you should have got from the authorization page.
+
+ **baseUrl**
+
+ Optional. Defaults to `https://mastodon.social`.
+
 
 ```javascript
 var Mastodon = require('mastodon')
@@ -28,10 +94,7 @@ var M = new Masto({
 
 ## `var M = new Mastodon(config)`
 
-Create a `Mastodon` instance that can be used to make requests to Mastodon's APIs. Currently only supports oauth2 access tokens (no username/password auth) for security reasons.
-
-I advise that you use the [oauth](https://www.npmjs.com/package/oauth) package to get the user's access_token. More information about how to do that is [on the wiki](https://github.com/jessicahayley/node-mastodon/wiki/Getting-an-access_token-with-the-oauth-package).
-You'll need to [register your app](https://github.com/tootsuite/mastodon/blob/master/docs/Using-the-API/API.md#oauth-apps) on Mastodon first as well.
+Create a `Mastodon` instance that can be used to make requests to Mastodon's APIs.
 
 If authenticating with user context, `config` should be an object of the form:
 ```

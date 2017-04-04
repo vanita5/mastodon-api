@@ -294,13 +294,15 @@ class Mastodon {
         })
     }
 
-    static createOAuthApp(url = DEFAULT_OAUTH_APPS_ENDPOINT) {
+    static createOAuthApp(url = DEFAULT_OAUTH_APPS_ENDPOINT,
+                          clientName = 'mastodon-node',
+                          scopes = 'read write follow') {
         return new Promise((resolve, reject) => {
             Request.post({
                 url,
                 form: {
-                    client_name: 'mastodon-node',
-                    scopes: 'read write follow',
+                    client_name: clientName,
+                    scopes,
                     redirect_uris: 'urn:ietf:wg:oauth:2.0:oob'
                 }
             }, (err, res, body) => {
@@ -331,10 +333,10 @@ class Mastodon {
         })
     }
 
-    static getAccessToken(clientId, clientSecret, code, baseUrl = DEFAULT_REST_BASE) {
+    static getAccessToken(clientId, clientSecret, authorizationCode, baseUrl = DEFAULT_REST_BASE) {
         return new Promise((resolve, reject) => {
             const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
-            oauth.getOAuthAccessToken(code, {
+            oauth.getOAuthAccessToken(authorizationCode, {
                 grant_type: 'authorization_code',
                 redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
             }, (err, accessToken /* , refreshToken, res */) => {
