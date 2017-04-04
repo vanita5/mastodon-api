@@ -8,7 +8,8 @@ import {
     STATUS_CODES_TO_ABORT_ON,
     DEFAULT_REST_ROOT,
     DEFAULT_REST_BASE,
-    REQUIRED_KEYS_FOR_AUTH
+    REQUIRED_KEYS_FOR_AUTH,
+    DEFAULT_OAUTH_APPS_ENDPOINT
 } from './settings'
 
 class Mastodon {
@@ -293,10 +294,10 @@ class Mastodon {
         })
     }
 
-    static createOAuthApp() {
+    static createOAuthApp(url = DEFAULT_OAUTH_APPS_ENDPOINT) {
         return new Promise((resolve, reject) => {
             Request.post({
-                url: 'https://mastodon.social/api/v1/apps',
+                url,
                 form: {
                     client_name: 'mastodon-node',
                     scopes: 'read write follow',
@@ -317,9 +318,9 @@ class Mastodon {
         })
     }
 
-    static getAuthorizationUrl(clientId, clientSecret) {
+    static getAuthorizationUrl(clientId, clientSecret, baseUrl = DEFAULT_REST_BASE) {
         return new Promise((resolve) => {
-            const oauth = new OAuth2(clientId, clientSecret, DEFAULT_REST_BASE, null, '/oauth/token')
+            const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             const url = oauth.getAuthorizeUrl({
                 redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
                 response_type: 'code',
@@ -330,9 +331,9 @@ class Mastodon {
         })
     }
 
-    static getAccessToken(clientId, clientSecret, code) {
+    static getAccessToken(clientId, clientSecret, code, baseUrl = DEFAULT_REST_BASE) {
         return new Promise((resolve, reject) => {
-            const oauth = new OAuth2(clientId, clientSecret, DEFAULT_REST_BASE, null, '/oauth/token')
+            const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             oauth.getOAuthAccessToken(code, {
                 grant_type: 'authorization_code',
                 redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
