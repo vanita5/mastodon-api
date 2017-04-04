@@ -1,6 +1,6 @@
 {
   "name": "mastodon-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Mastodon API library with streaming support",
   "main": "./lib/mastodon",
   "scripts": {
