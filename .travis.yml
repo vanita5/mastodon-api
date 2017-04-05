@@ -10,6 +10,6 @@ sudo: false
 
 cache: yarn
 
-install:
-  - yarn
-  - yarn start
+install: yarn
+
+script: yarn start
