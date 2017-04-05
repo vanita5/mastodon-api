@@ -1,15 +1,15 @@
 language: node_js
 
 node_js:
-  "node"
-  "7"
-  "6"
-  "5"
+  - "node"
+  - "7"
+  - "6"
+  - "5"
 
 sudo: false
 
 cache: yarn
 
 install:
-  yarn
-  yarn start
+  - yarn
+  - yarn start
