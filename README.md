@@ -88,7 +88,7 @@ Your `client_id`.
 ```javascript
 import Mastodon from 'mastodon-api'
 
-var M = new Mastodom({
+const M = new Mastodom({
   access_token: '...',
   timeout_ms: 60*1000,  // optional HTTP request timeout to apply to all requests.
   api_url: 'https://gay.crime.team/api/v1/', // optional, defaults to https://mastodon.social/api/v1/
@@ -97,7 +97,7 @@ var M = new Mastodom({
 
 # node-mastodon API:
 
-## `var M = new Mastodon(config)`
+## `const M = new Mastodon(config)`
 
 Create a `Mastodon` instance that can be used to make requests to Mastodon's APIs.
 
@@ -177,7 +177,7 @@ When an HTTP response is received, it is verified that the certificate was signe
 
 eg.
 ```js
-var M = new Mastodon({
+const M = new Mastodon({
   access_token:         '...',
   trusted_cert_fingerprints: [
     '66:EA:47:62:D9:B1:4F:1A:AE:89:5F:68:BA:6B:8E:BB:F8:1D:BF:8E',
