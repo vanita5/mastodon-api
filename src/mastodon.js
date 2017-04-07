@@ -324,9 +324,9 @@ class Mastodon {
     }
 
     static getAuthorizationUrl(clientId, clientSecret,
-                               { baseUrl = DEFAULT_REST_BASE,
+                               baseUrl = DEFAULT_REST_BASE,
                                scope = 'read write follow',
-                               redirectUri = 'urn:ietf:wg:oauth:2.0:oob' }) {
+                               redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
         return new Promise((resolve) => {
             const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             const url = oauth.getAuthorizeUrl({
@@ -335,7 +335,7 @@ class Mastodon {
                 client_id: clientId,
                 scope
             })
-            resolve({ clientId, clientSecret, url })
+            resolve(url)
         })
     }
 

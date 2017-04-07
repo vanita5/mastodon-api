@@ -7,26 +7,32 @@ const rl = readline.createInterface({
     output: process.stdout
 })
 
+let clientId
+let clientSecret
+
 Mastodon.createOAuthApp()
     .catch(err => console.error(err))
     .then((res) => {
         console.log('Please save \'id\', \'client_id\' and \'client_secret\' in your program and use it from now on!')
         console.log(res)
-        return Mastodon.getAuthorizationUrl(res.client_id, res.client_secret)
+
+        clientId = res.client_id
+        clientSecret = res.client_secret
+
+        return Mastodon.getAuthorizationUrl(clientId, clientSecret)
     })
-    .then((data) => {
+    .then(url => {
         console.log('This is the authorization URL. Open it in your browser and authorize with your account!')
-        console.log(data.url)
+        console.log(url)
         return new Promise((resolve) => {
-            rl.question('Please enter the code from the website: ', (code) => {
-                data.code = code
-                resolve(data)
+            rl.question('Please enter the code from the website: ', code => {
+                resolve(code)
                 rl.close()
             })
         })
     })
-    .then(data => Mastodon.getAccessToken(data.clientId, data.clientSecret, data.code))
+    .then(code => Mastodon.getAccessToken(clientId, clientSecret, code))
     .catch(err => console.error(err))
-    .then((accessToken) => {
+    .then(accessToken => {
         console.log(`This is the access token. Save it!\n${accessToken}`)
     })

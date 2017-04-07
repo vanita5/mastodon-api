@@ -52,7 +52,7 @@ Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to
 
 Optional. Defaults to `urn:ietf:wg:oauth:2.0:oob`. This will be used in a future call to `Mastodon.getAuthorizationUrl(...)`, only the URL defined here can be used later to redirect the user. The default means no redirect (the code will be shown to the user).
 
-## `Mastodon.getAuthorizationUrl(clientId, clientSecret, { baseUrl, scope, redirectUri })`
+## `Mastodon.getAuthorizationUrl(clientId, clientSecret, baseUrl, scope, redirectUri)`
 Returns an authorization url for users to authorize your application.
 `clientId` and `clientSecret` can be obtained by calling `Mastodon.createOAuthApp(...)` before.
 
@@ -68,7 +68,7 @@ Your `client_secret`.
 
 Optional. Defaults to `https://mastodon.social`.
 
-**scopes**
+**scope**
 
 Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to `read write follow`.
 
