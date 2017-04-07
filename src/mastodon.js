@@ -323,7 +323,7 @@ class Mastodon {
         })
     }
 
-    static getAuthorizationUrl(clientId, clientSecret, 
+    static getAuthorizationUrl(clientId, clientSecret,
                                { baseUrl = DEFAULT_REST_BASE,
                                scope = 'read write follow',
                                redirectUri = 'urn:ietf:wg:oauth:2.0:oob' }) {
