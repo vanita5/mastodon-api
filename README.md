@@ -30,7 +30,7 @@ The authorization process works as follows:
 2. With the received `client_id` and `client_secret` get an authorization URL
 3. Get an access token by hitting the `/oauth/token` endpoint with the authorization code you got from the authorization page
 
-## `Mastodon.createOAuthApp(url, clientName, scopes)`
+## `Mastodon.createOAuthApp(url, clientName, scopes, redirectUri)`
 Makes a call to the `/app` endpoint to create an OAuth app.
 Returns the apps `id`, `client_id` and `client_secret`.
 
@@ -46,9 +46,13 @@ Optional. Defaults to `mastodon-node`
 
 **scopes**
 
-Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to `read write follow`
+Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to `read write follow`.
 
-## `Mastodon.getAuthorizationUrl(clientId, clientSecret, baseUrl)`
+**redirectUri**
+
+Optional. Defaults to `urn:ietf:wg:oauth:2.0:oob`. This will be used in a future call to `Mastodon.getAuthorizationUrl(...)`, only the URL defined here can be used later to redirect the user. The default means no redirect (the code will be shown to the user).
+
+## `Mastodon.getAuthorizationUrl(clientId, clientSecret, { baseUrl, scope, redirectUri })`
 Returns an authorization url for users to authorize your application.
 `clientId` and `clientSecret` can be obtained by calling `Mastodon.createOAuthApp(...)` before.
 
@@ -64,6 +68,14 @@ Your `client_secret`.
 
 Optional. Defaults to `https://mastodon.social`.
 
+**scopes**
+
+Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to `read write follow`.
+
+**redirectUri**
+
+Optional. Defaults to `urn:ietf:wg:oauth:2.0:oob`. If you specify your own URL, it will be called with a query parameter `code`.
+
 ## `Mastodon.getAccessToken(clientId, clientSecret, authorizationCode, baseUrl)`
 After authorizing your OAuth application via the authorization URL from `Mastodon.getAuthorizationUrl(...)`
 you'll get the authorization code on the website, which lets us obtain the access token we actually need.
@@ -72,17 +84,17 @@ you'll get the authorization code on the website, which lets us obtain the acces
 
 Your `client_id`.
 
- **clientSecret**
+**clientSecret**
 
- Your `client_secret`.
+Your `client_secret`.
 
- **authorizationCode**
+**authorizationCode**
 
- The authorization code you should have got from the authorization page.
+The authorization code you should have got from the authorization page.
 
- **baseUrl**
+**baseUrl**
 
- Optional. Defaults to `https://mastodon.social`.
+Optional. Defaults to `https://mastodon.social`.
 
 
 ```javascript
