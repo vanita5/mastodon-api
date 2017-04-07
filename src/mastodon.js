@@ -298,14 +298,15 @@ class Mastodon {
 
     static createOAuthApp(url = DEFAULT_OAUTH_APPS_ENDPOINT,
                           clientName = 'mastodon-node',
-                          scopes = 'read write follow') {
+                          scopes = 'read write follow',
+                          redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
         return new Promise((resolve, reject) => {
             Request.post({
                 url,
                 form: {
                     client_name: clientName,
-                    scopes,
-                    redirect_uris: 'urn:ietf:wg:oauth:2.0:oob'
+                    redirect_uris: redirectUri,
+                    scopes
                 }
             }, (err, res, body) => {
                 if (err) {
@@ -323,15 +324,16 @@ class Mastodon {
     }
 
     static getAuthorizationUrl(clientId, clientSecret, 
-                               baseUrl = DEFAULT_REST_BASE,
-                               scope = 'read write follow') {
+                               { baseUrl = DEFAULT_REST_BASE,
+                               scope = 'read write follow',
+                               redirectUri = 'urn:ietf:wg:oauth:2.0:oob' }) {
         return new Promise((resolve) => {
             const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             const url = oauth.getAuthorizeUrl({
-                redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+                redirect_uri: redirectUri,
                 response_type: 'code',
-                scope,
-                client_id: clientId
+                client_id: clientId,
+                scope
             })
             resolve({ clientId, clientSecret, url })
         })
