@@ -163,9 +163,10 @@ M.get('timelines/home', {}).then(resp => console.log(resp.data))
 
 ### Upload an image and attach it to a tweet
 ```javascript
-let id;
-M.post('media', { file: fs.createReadStream('path/to/image.png') }).then(resp => id = resp.data.id)
-M.post('statuses', { status: '#selfie', media_ids: [id] });
+M.post('media', { file: fs.createReadStream('path/to/image.png') }).then(resp => {
+  const id = resp.data.id;
+  M.post('statuses', { status: '#selfie', media_ids: [id] })
+});
 ```
 
 ### Stream home timeline
