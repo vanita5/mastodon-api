@@ -339,12 +339,14 @@ class Mastodon {
         })
     }
 
-    static getAccessToken(clientId, clientSecret, authorizationCode, baseUrl = DEFAULT_REST_BASE) {
+    static getAccessToken(clientId, clientSecret, authorizationCode,
+                          baseUrl = DEFAULT_REST_BASE,
+                          redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
         return new Promise((resolve, reject) => {
             const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             oauth.getOAuthAccessToken(authorizationCode, {
                 grant_type: 'authorization_code',
-                redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
+                redirect_uri: redirectUri
             }, (err, accessToken /* , refreshToken, res */) => {
                 if (err) {
                     reject(err)
