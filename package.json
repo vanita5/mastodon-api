@@ -5,7 +5,6 @@
   "main": "./lib/mastodon",
   "scripts": {
     "start": "gulp",
-    "test": "gulp test",
     "prepublish": "gulp prepublish"
   },
   "homepage": "https://github.com/vanita5/mastodon-api",
