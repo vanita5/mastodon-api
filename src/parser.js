@@ -8,6 +8,12 @@ class Parser extends EventEmitter {
     }
 
     parse(chunk) {
+        // skip heartbeats
+        if (chunk === ':thump\n') {
+            this.emit('heartbeat', {})
+            return
+        }
+
         this.message += chunk
         chunk = this.message
 
@@ -29,8 +35,6 @@ class Parser extends EventEmitter {
 
                 /* eslint-disable no-continue */
                 if (!piece.length) continue // empty object
-
-                if (piece.charAt(0) === ':') continue // heartbeat
 
                 const root = piece.split('\n')
 
