@@ -13,3 +13,7 @@ stream.on('message', (msg) => {
 stream.on('error', (err) => {
     console.log(err)
 })
+
+stream.on('heartbeat', (msg) => {
+    console.log('thump.')
+})
