@@ -100,7 +100,7 @@ Optional. Defaults to `https://mastodon.social`.
 ```javascript
 import Mastodon from 'mastodon-api'
 
-const M = new Mastodom({
+const M = new Mastodon({
   access_token: '...',
   timeout_ms: 60*1000,  // optional HTTP request timeout to apply to all requests.
   api_url: 'https://gay.crime.team/api/v1/', // optional, defaults to https://mastodon.social/api/v1/
