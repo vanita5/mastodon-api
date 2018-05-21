@@ -299,12 +299,14 @@ class Mastodon {
     static createOAuthApp(url = DEFAULT_OAUTH_APPS_ENDPOINT,
                           clientName = 'mastodon-node',
                           scopes = 'read write follow',
-                          redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
+                          redirectUri = 'urn:ietf:wg:oauth:2.0:oob',
+                          webSite = null) {
         return new Promise((resolve, reject) => {
             Request.post({
                 url,
                 form: {
                     client_name: clientName,
+                    website: webSite,
                     redirect_uris: redirectUri,
                     scopes
                 }
