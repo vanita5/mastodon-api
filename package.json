@@ -46,5 +46,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2"
+  },
+  "resolutions": {
+    "natives": "1.1.3"
   }
 }
