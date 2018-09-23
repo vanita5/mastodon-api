@@ -76,7 +76,7 @@ Optional. Defines the scopes of your OAuth app whitespace seperated. Defaults to
 
 Optional. Defaults to `urn:ietf:wg:oauth:2.0:oob`. If you specify your own URL, it will be called with a query parameter `code`.
 
-## `Mastodon.getAccessToken(clientId, clientSecret, authorizationCode, baseUrl)`
+## `Mastodon.getAccessToken(clientId, clientSecret, authorizationCode, baseUrl, redirectUri)`
 After authorizing your OAuth application via the authorization URL from `Mastodon.getAuthorizationUrl(...)`
 you'll get the authorization code on the website, which lets us obtain the access token we actually need.
 
@@ -95,6 +95,10 @@ The authorization code you should have got from the authorization page.
 **baseUrl**
 
 Optional. Defaults to `https://mastodon.social`.
+
+**redirectUri**
+
+Optional. Defaults to `urn:ietf:wg:oauth:2.0:oob`.
 
 
 ```javascript
