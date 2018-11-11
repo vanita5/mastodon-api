@@ -29,8 +29,16 @@ class Mastodon {
         return this.request('GET', path, params, callback)
     }
 
+    patch(path, params, callback) {
+        return this.request('PATCH', path, params, callback)
+    }
+
     post(path, params, callback) {
         return this.request('POST', path, params, callback)
+    }
+
+    put(path, params, callback) {
+        return this.request('PUT', path, params, callback)
     }
 
     delete(path, params, callback) {
@@ -39,7 +47,7 @@ class Mastodon {
 
     request(method, path, params, callback) {
         const self = this
-        assert(method === 'GET' || method === 'POST' || method === 'DELETE')
+        assert(method === 'GET' || method === 'PATCH' || method === 'POST' || method === 'PUT' || method === 'DELETE')
         // if no `params` is specified but a callback is, use default params
         if (typeof params === 'function') {
             callback = params
