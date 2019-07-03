@@ -2,6 +2,7 @@ import assert from 'assert'
 import util from 'util'
 import { OAuth2 } from 'oauth'
 import Request from 'request'
+import JSONbig from 'json-bigint'
 
 import Helpers from './helpers'
 import StreamingAPIConnection from './streaming-api-connection'
@@ -204,7 +205,7 @@ class Mastodon {
             request.on('end', () => {
                 if (body !== '') {
                     try {
-                        body = JSON.parse(body)
+                        body = JSONbig.parse(body)
                     } catch (jsonDecodeError) {
                         // there was no transport-level error,
                         // but a JSON object could not be decoded from the request body
@@ -324,7 +325,7 @@ class Mastodon {
                     return
                 }
                 try {
-                    body = JSON.parse(body)
+                    body = JSONbig.parse(body)
                 } catch (e) {
                     reject(new Error(`Error parsing body ${body}`))
                 }
