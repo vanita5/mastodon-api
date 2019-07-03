@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events'
+import JSONbig from 'json-bigint'
 
 class Parser extends EventEmitter {
 
@@ -46,7 +47,7 @@ class Parser extends EventEmitter {
                 let data = root[1].substr(6)
 
                 try {
-                    data = JSON.parse(data)
+                    data = JSONbig.parse(data)
                 } catch (err) {
                     this.emit('error', new Error(`Error parsing API reply: '${piece}', error message: '${err}'`))
                 } finally {

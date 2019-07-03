@@ -1,11 +1,12 @@
 import Request from 'request'
-
 import { EventEmitter } from 'events'
+import JSONbig from 'json-bigint'
 
 import Helpers from './helpers'
 import Parser from './parser'
 
 import { STATUS_CODES_TO_ABORT_ON } from './settings'
+
 
 class StreamingAPIConnection extends EventEmitter {
 
@@ -79,7 +80,7 @@ class StreamingAPIConnection extends EventEmitter {
                     body += chunk.toString('utf8')
 
                     try {
-                        body = JSON.parse(body)
+                        body = JSONbig.parse(body)
                     } catch (jsonDecodeError) {
                         // if non-JSON text was returned, we'll just attach it to the error as-is
                     }
