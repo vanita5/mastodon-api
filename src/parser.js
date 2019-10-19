@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events'
 
 class Parser extends EventEmitter {
-
     constructor() {
         super()
         this.message = ''

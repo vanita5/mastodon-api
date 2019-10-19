@@ -15,7 +15,6 @@ import {
 } from './settings'
 
 class Mastodon {
-
     constructor(config) {
         this.apiUrl = config.api_url || DEFAULT_REST_ROOT
 
@@ -86,7 +85,7 @@ class Mastodon {
                                     _returnErrorToUser(merr)
                                     return
                                 }
-                                const fingerprint = response.socket.getPeerCertificate().fingerprint
+                                const { fingerprint } = response.socket.getPeerCertificate()
                                 const trustedFingerprints = self.config.trusted_cert_fingerprints
                                 if (!trustedFingerprints.includes(fingerprint)) {
                                     const errMsg = util.format('Certificate untrusted. Trusted fingerprints are: %s. Got fingerprint: %s.',
@@ -293,7 +292,7 @@ class Mastodon {
         }
 
         if (typeof config.timeout_ms !== 'undefined'
-                && isNaN(Number(config.timeout_ms))) {
+                && Number.isNaN(Number(config.timeout_ms))) {
             throw new TypeError(`config parameter 'timeout_ms' must be a Number, got ${config.timeout_ms}.`)
         }
 
@@ -305,10 +304,10 @@ class Mastodon {
     }
 
     static createOAuthApp(url = DEFAULT_OAUTH_APPS_ENDPOINT,
-                          clientName = 'mastodon-node',
-                          scopes = 'read write follow',
-                          redirectUri = 'urn:ietf:wg:oauth:2.0:oob',
-                          webSite = null) {
+        clientName = 'mastodon-node',
+        scopes = 'read write follow',
+        redirectUri = 'urn:ietf:wg:oauth:2.0:oob',
+        webSite = null) {
         return new Promise((resolve, reject) => {
             Request.post({
                 url,
@@ -334,9 +333,9 @@ class Mastodon {
     }
 
     static getAuthorizationUrl(clientId, clientSecret,
-                               baseUrl = DEFAULT_REST_BASE,
-                               scope = 'read write follow',
-                               redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
+        baseUrl = DEFAULT_REST_BASE,
+        scope = 'read write follow',
+        redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
         return new Promise((resolve) => {
             const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             const url = oauth.getAuthorizeUrl({
@@ -350,8 +349,8 @@ class Mastodon {
     }
 
     static getAccessToken(clientId, clientSecret, authorizationCode,
-                          baseUrl = DEFAULT_REST_BASE,
-                          redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
+        baseUrl = DEFAULT_REST_BASE,
+        redirectUri = 'urn:ietf:wg:oauth:2.0:oob') {
         return new Promise((resolve, reject) => {
             const oauth = new OAuth2(clientId, clientSecret, baseUrl, null, '/oauth/token')
             oauth.getOAuthAccessToken(authorizationCode, {
