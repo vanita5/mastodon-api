@@ -25,3 +25,5 @@ gulp.task('build', gulp.series('lint', () => gulp.src(paths.srcJs)
     .pipe(gulp.dest(paths.destination))))
 
 gulp.task('prepublish', gulp.series('clean', 'build'))
+
+gulp.task('default', gulp.series('build'))
