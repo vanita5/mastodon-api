@@ -8,7 +8,6 @@ import Parser from './parser'
 import { STATUS_CODES_TO_ABORT_ON } from './settings'
 
 class StreamingAPIConnection extends EventEmitter {
-
     constructor(requestOptions, mastodonOptions) {
         super()
         this.requestOptions = requestOptions
@@ -247,7 +246,6 @@ class StreamingAPIConnection extends EventEmitter {
         this.emit('disconnect', msg)
         this.stop()
     }
-
 }
 
 export default StreamingAPIConnection

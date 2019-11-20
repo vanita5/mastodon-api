@@ -4,4 +4,4 @@ const M = new Mastodon({
     access_token: '...'
 })
 
-M.get('timelines/home', {}).then(resp => console.log(resp.data))
+M.get('timelines/home', {}).then((resp) => console.log(resp.data))

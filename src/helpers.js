@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 
 class Helpers {
-
     /**
      * For each `/:param` fragment in path, move the value in params
      * at that key to path. If the key is not found in params, throw.

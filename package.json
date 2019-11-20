@@ -5,7 +5,7 @@
   "main": "./lib/mastodon",
   "scripts": {
     "start": "gulp",
-    "prepublish": "gulp prepublish"
+    "prepare": "gulp prepublish"
   },
   "homepage": "https://github.com/vanita5/mastodon-api",
   "repository": {
@@ -29,23 +29,28 @@
     "rest"
   ],
   "dependencies": {
-    "gulp-eslint": "^3.0.1",
-    "mime": "^1.3.4",
+    "gulp-eslint": "^6.0.0",
+    "mime": "^2.4.4",
     "oauth": "^0.9.15",
     "readline": "^1.3.0",
-    "request": "^2.81.0"
+    "request": "^2.88.0"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.1",
-    "babel-preset-latest": "^6.24.0",
-    "eslint": "^3.15.0",
-    "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
-    "eslint-plugin-react": "^6.9.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-clean": "^0.3.2"
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-cli": "^2.2.0"
   },
   "resolutions": {
     "natives": "1.1.6"
