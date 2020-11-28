@@ -230,25 +230,24 @@ class Mastodon {
                 // success case - no errors in HTTP response body
                 callback(null, body, response)
             })
+        })
 
-
-            request.on('error', (err) => {
-                // transport-level error occurred - likely a socket error
-                if (mastodonOptions.retry
-                    && STATUS_CODES_TO_ABORT_ON.includes(err.statusCode)) {
-                    // retry the request since retries were specified
-                    // and we got a status code we should retry on
-                    // FIXME
-                    // this.request(method, path, params, callback);
-                } else {
-                    // pass the transport-level error to the caller
-                    err.statusCode = null
-                    err.code = null
-                    err.allErrors = []
-                    err = Helpers.attachBodyInfoToError(err, body)
-                    callback(err, body, response)
-                }
-            })
+        request.on('error', (err) => {
+            // transport-level error occurred - likely a socket error
+            if (mastodonOptions.retry
+                && STATUS_CODES_TO_ABORT_ON.includes(err.statusCode)) {
+                // retry the request since retries were specified
+                // and we got a status code we should retry on
+                // FIXME
+                // this.request(method, path, params, callback);
+            } else {
+                // pass the transport-level error to the caller
+                err.statusCode = null
+                err.code = null
+                err.allErrors = []
+                err = Helpers.attachBodyInfoToError(err, body)
+                callback(err, body, response)
+            }
         })
     }
 
